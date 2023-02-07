@@ -95,6 +95,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.13.7-x64-mingw32)
       racc (~> 1.4)
+    pg (1.4.3)
     pg (1.4.3-x64-mingw32)
     puma (3.12.6)
     racc (1.6.0)
@@ -172,6 +173,7 @@ GEM
       tzinfo (>= 1.0.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
+    wdm (0.1.1)
     web-console (3.7.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -208,6 +210,7 @@ DEPENDENCIES
   turbolinks (~> 5)
   tzinfo-data
   uglifier (>= 1.3.0)
+  wdm (>= 0.1.0)
   web-console (>= 3.3.0)
   will_paginate
 
