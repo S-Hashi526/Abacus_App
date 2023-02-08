@@ -1,0 +1,44 @@
+<% provide(:title, "Base list") %>
+<% provide(:button_text, '新規作成') %>
+
+<h1>拠点一覧</h1>
+
+<table class="table table-bordered table-striped table-condensed">
+  <thead>
+    <tr>
+      <td class="col-md-4"></td>
+      <td class="col-md-2"></td>
+      <td class="col-md-2 t-middle">拠点番号</td>
+      <td class="col-md-2 t-middle">拠点名</td>
+      <td class="col-md-2 t-middle">拠点種類</td>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @base.each do |base| %>
+      <tr>
+        <td>
+          <%= link_to "編集", edit_basis_path(base), remote: true, class: "btn btn-primary" %>
+        </td>
+        <td class="t-middle">
+          <%= link_to "削除", base, method: :delete,
+          data: { confirl: "削除してよろしいですか?" },
+          class: "btn btn-primary" %>
+        </td>
+        <td class="t-middle"><%= base.base_no %></td>
+        <td class="t-middle"><%= base.base_name %></td>
+        <td class="t-middle"><%= base.attendance_type %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <%= link_to "拠点情報の追加", new_basis_path, remote: true, class: "btn btn-primary" %>
+  </div>
+</div>
+
+<!-- モーダルウィンドウ表示 -->
+<div id="edit-base" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="new-base" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
