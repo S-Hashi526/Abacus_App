@@ -24,9 +24,11 @@ ActiveRecord::Schema.define(version: 20230208130750) do
   end
 
   create_table "bases", force: :cascade do |t|
-    t.integer "base_namber"
+    t.integer "base_number"
     t.string "base_name"
     t.string "attendance_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

@@ -22,10 +22,10 @@
         </td>
         <td class="t-middle">
           <%= link_to "削除", base, method: :delete,
-          data: { confirl: "削除してよろしいですか?" },
-          class: "btn btn-primary" %>
+          data: { confirm: "削除してよろしいですか?" },
+          class: "btn btn-danger" %>
         </td>
-        <td class="t-middle"><%= base.base_no %></td>
+        <td class="t-middle"><%= base.base_number %></td>
         <td class="t-middle"><%= base.base_name %></td>
         <td class="t-middle"><%= base.attendance_type %></td>
       </tr>
@@ -40,5 +40,5 @@
 </div>
 
 <!-- モーダルウィンドウ表示 -->
-<div id="edit-base" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
-<div id="new-base" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="edit" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<div id="new" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
