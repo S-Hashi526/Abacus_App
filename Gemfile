@@ -12,6 +12,7 @@ gem 'jquery-rails'
 gem 'puma', '~> 3.7'
 gem 'rails', '~> 5.1.6'
 gem 'rails-i18n'                    # 日本語化
+gem 'roo'                           # csvファイル読込用（Excel, CSV, OpenOffice, GoogleSpreadSheetを開くことが可能）
 gem 'rounding'                      # 時間だけでなく、数値全般を扱える
 gem 'sass-rails', '~> 5.0'          # SCSS(Syntactically Awesome StyleSheet：効率的にCSSが書ける言語)
 gem 'turbolinks', '~> 5'
