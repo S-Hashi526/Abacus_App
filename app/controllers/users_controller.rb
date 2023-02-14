@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     if params[:file].blank?
       flash[:danger]= "CSVファイルを選択してください"
     else
-      User.import(palams[:file])
+      User.import(params[:file])
       flash[:success] = "CSVファイルをインポートしました"
     end
     redirect_to users_url

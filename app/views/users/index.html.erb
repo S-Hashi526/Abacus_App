@@ -3,7 +3,7 @@
 
 <!-- CSVインポート -->
 <div class="col-md-10 col-md-offset-1">
-  <%= form_tag import_user_path, multipart: true do %>
+  <%= form_tag import_users_path, multipart: true do %>
     <%= file_field_tag :file %>
     <%= submit_tag "CSVをインポート", class:"btn btn-primary" %>
   <% end %>
