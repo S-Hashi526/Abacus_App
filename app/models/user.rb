@@ -53,7 +53,7 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, nil)
   end
 
-  # inportメソッド
+  # importメソッド
   def self.import(file)
     CSV.foreach(file.path, encoding: 'Shift_JIS:UTF-8', headers: true) do |row|
       # IDが見つかればレコードを呼び出し、見つからなければ新規作成

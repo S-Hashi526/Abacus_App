@@ -16,7 +16,28 @@ ActiveRecord::Schema.define(version: 20230214130159) do
     t.date "worked_on"
     t.datetime "started_at"
     t.datetime "finished_at"
+    t.datetime "change_started_at"
+    t.datetime "change_finished_at"
+    t.time "overwork_end_time"
+    t.boolean "next_day"
+    t.boolean "overwork_next_day"
     t.string "note"
+    t.string "overwork_status"
+    t.string "overwork_approval_status"
+    t.string "attendance_change_status"
+    t.string "attendance_change_check_status"
+    t.string "onemonth_approval_status"
+    t.string "onemonth_approval_check_status"
+    t.string "business_process_content"
+    t.string "superior_confirmation"
+    t.string "superior_notice_confirmation"
+    t.string "superior_attendance_change_confirmation"
+    t.string "superior_attendance_change_approval_confirmation"
+    t.string "superior_month_notice_confirmation"
+    t.string "superior_month_approval_confirmation"
+    t.boolean "is_check"
+    t.boolean "change_check"
+    t.boolean "approval_check"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -40,8 +61,14 @@ ActiveRecord::Schema.define(version: 20230214130159) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "affiliation"
-    t.datetime "basic_time", default: "2023-02-13 23:00:00"
-    t.datetime "work_time", default: "2023-02-13 22:30:00"
+    t.datetime "basic_work_time", default: "2023-02-21 22:30:00"
+    t.datetime "designated_work_start_time", default: "2023-02-22 00:00:00"
+    t.datetime "designated_work_end_time", default: "2023-02-22 08:30:00"
+    t.integer "employee_number"
+    t.integer "uid"
+    t.boolean "superior", default: false
+    t.datetime "basic_time", default: "2023-02-21 23:00:00"
+    t.datetime "work_time", default: "2023-02-21 22:30:00"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
