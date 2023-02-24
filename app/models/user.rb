@@ -4,18 +4,15 @@ class User < ApplicationRecord
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
 
-  validates :name, presence: true, length: { maximum: 50 }
-
+  validates :name,  presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 100 },
                     format: { with: VALID_EMAIL_REGEX },
                     uniqueness: true
-  validates :affiliation, length: { in: 2..50 }, allow_blank: true
+  validates :affiliation, length: { in: 2..30 }, allow_blank: true
+  validates :employee_number, length: { maximum: 50 }, allow_blank: true
   validates :basic_work_time, presence: true
-  validates :designated_work_start_time, presence: true
-  validates :designated_work_end_time, presence: true
-  validates :employee_number, length: { maximum: 50 }
-  validates :uid, presence: true, length: { maximum: 4 }
+  validates :work_time, presence: true
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
@@ -55,7 +52,7 @@ class User < ApplicationRecord
 
   # importメソッド
   def self.import(file)
-    CSV.foreach(file.path, encoding: 'Shift_JIS:UTF-8', headers: true) do |row|
+    CSV.foreach(file.path, headers: true, skip_blanks: true, encoding: 'Shift_JIS:UTF-8') do |row|
       # IDが見つかればレコードを呼び出し、見つからなければ新規作成
       user = find_by(id: row["id"]) || new
 

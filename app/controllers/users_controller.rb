@@ -3,13 +3,13 @@ class UsersController < ApplicationController
   # ログイン中のユーザーか
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   # アクセス先のログインユーザー
-  before_action :correct_user, only: [:edit, :update, :edit_basic_info, :update_basic_info, :update_basic_info]
+  before_action :correct_user, only: [:edit, :update, :edit_basic_info, :update_basic_info, :edit_basic_info, :update_basic_info]
   # 管理者ユーザー
   before_action :admin_user, only: [:destroy, :index, :list_of_employees, :edit_basic_info, :update_basic_info]
   # 1か月分の勤怠情報を取得
   before_action :set_one_month, only: :show
   # アクセス先のログインユーザーor上長（管理者も不可）
-  before_action :admin_or_correct_user, only: :show
+  before_action :not_allow_admin_user, only: :show
 
   def index
     @users = User.paginate(page: params[:page])
@@ -18,19 +18,20 @@ class UsersController < ApplicationController
 
   def import
     if params[:file].blank?
-      flash[:danger]= "CSVファイルを選択してください"
-    else
-      User.import(params[:file])
-      flash[:success] = "CSVファイルをインポートしました"
+      flash[:danger]= "csvファイルを選択してください"
+    else 
+      User.import(params[:file]) 
+      flash[:success] = "csvファイルをインポートしました"    
     end
     redirect_to users_url
   end
   
   def show
-    @worked_sum = @attendances.where.not(started_at: nil).count
+    @worked_sum = @attendances.where.not(started_at: nil).count    
     @superior = User.where(superior: true).where.not(id: @user.id)
     @attendance = @user.attendances.find_by(worked_on: @first_day)
-    if current_user.superior?
+   # @user.attendancesは、Attendance.find_by(user_id: @user.id)
+    if current_user.superior?      
       @overwork_sum = Attendance.includes(:user).where(superior_confirmation: current_user.id, overwork_status: "申請中").count
       @attendance_change_sum = Attendance.includes(:user).where(superior_attendance_change_confirmation: current_user.id, attendance_change_status: "申請中").count
       @one_month_approval_sum = Attendance.includes(:user).where(superior_month_notice_confirmation: current_user.id, one_month_approval_status: "申請中").count    
@@ -68,9 +69,21 @@ class UsersController < ApplicationController
     else
       flash[:danger] = "アカウント情報を更新できません。"
     end
+    redirect_to edit_user_url
+  end
+
+  def edit_basic_info
+  end
+
+  def update_basic_info
+    if @user.update_attributes(basic_info_params)
+      flash[:success] = "社員情報を更新しました。"
+    else
+      flash[:danger] = "社員情報を更新できません。"     
+    end
     redirect_to users_url
   end
-  
+
   def destroy
     @user.destroy
     flash[:success] = "#{@user.name}のデータを削除しました。"
@@ -78,33 +91,26 @@ class UsersController < ApplicationController
   end
   
   def list_of_employees
-    @users = User.all.includes(:attendance)
+    @users = User.all.includes(:attendances)
   end
 
   def confirmation
   end
   
-  def edit_basic_info
-  end
-  
-  def update_basic_info
-    if @user.update_attributes(basic_info_params)
-      flash[:success] = "#{@user.name}の基本情報を更新しました。"
-    else
-      flash[:danger] = "#{@user.name}の更新は失敗しました。"+ @user.errors.full_messages.join("<br>")
-    end
-    redirect_to users_url
-  end
-  
   private
     
-    def user_params
-      params.require(:user).permit(:name, :email, :affiliation, :emploee_number, :uid, :password, :basic_work_time, :designated_work_start_time, :designated_work_end_time)
+    def set_user
+      @user = User.find(params[:id])
     end
     
     def basic_info_params
-      params.require(:user).permit(:name, :email, :affiliation, :emploee_number, :uid, :password, :basic_work_time, :designated_work_start_time, :designated_work_end_time)
+      params.require(:user).permit(:name, :email, :affiliation, :employoee_number, :uid, :password, :basic_work_time, :designated_work_start_time, :designated_work_end_time)
     end
+
+    def user_params
+      params.require(:user).permit(:name, :email, :affiliation, :employee_number, :uid, :password, :basic_work_time, :designated_work_start_time, :designated_work_end_time)
+    end
+    
 
     def send_attendances_csv(attendances)
       # 文字化け防止

@@ -1,0 +1,15 @@
+<% provide(:title,@base) %>
+<div>
+  <table class="table table-bordered table-condensed base-table" %>
+    <tr>
+      <th>拠点番号</th>
+      <th>拠点名</th>
+      <th>拠点種類</th>
+    </tr>
+    <tr>
+      <td><%= @base.base_number %></td>
+      <td><%= @base.base_name %></td>
+      <td><%= @base.attendance_type %></td>
+    </tr>
+  </table>
+</div>

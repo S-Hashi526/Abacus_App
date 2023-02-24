@@ -8,18 +8,18 @@ class ApplicationController < ActionController::Base
 
   # paramsハッシュからユーザーを取得します。
   def set_user
-    if User.where(id: params[:id]).present?
-      @user = User.find(params[:id])
-    else
-      flash[:danger] = "ユーザーが存在しません。"
-      redirect_to root_url
-    end
+    @user = User.find(params[:id])
   end
+
+  def set_user_user_id
+    @user = User.find(params[:user_id])
+  end
+
   
   # ログイン済みのユーザーか確認します。
   def logged_in_user
-    store_location
     unless logged_in?
+      store_location
       flash[:danger] = "ログインしてください。"
       redirect_to login_url
     end
@@ -27,34 +27,21 @@ class ApplicationController < ActionController::Base
 
   # アクセスしたユーザーが現在ログインしているユーザーか確認します。
   def correct_user
-    redirect_to(root_url) unless current_user?(@user)
+    redirect_to(root_url) unless current_user?(@user) || current_user.admin?
   end
   
-  # システム管理権限所有かどうか判定します。
+  # システム管理権限所有かどうか判定。
   def admin_user
-    unless current_user.admin?
-      flash[:danger] = "権限がありません。"
-      redirect_to root_url
-    end
+    redirect_to root_url unless current_user.admin?
   end
 
-  # アクセスしたユーザーが
-  # 現在ログインしているユーザーまたは上長ユーザーか確認します。
-  def correct_user_or_admin
-    
-    if params[:id] == "1"
-      redirect_to root_url
-      return
-    end
-    
-    unless current_user?(@user) || current_user.superior?
-      flash[:danger] = "権限がありません。"
-      redirect_to root_url
-    end
+  def admin_or_correct_user
+    redirect_to root_url if current_user.admin?
   end
 
-  # ページ出力前に1ヶ月分のデー���の存在を確認・セットします。
+  # ページ出力前に1ヶ月分のデータの存在を確認・セット。
   def set_one_month
+    #パラムスの日付がないときは当月の最初の日
     @first_day = params[:date].nil? ?
       Date.current.beginning_of_month : params[:date].to_date
       

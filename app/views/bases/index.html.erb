@@ -1,21 +1,23 @@
-<% provide(:title, "Base list") %>
+<% provide(:title, 'Base list') %>
 <% provide(:button_text, '新規作成') %>
 
 <h1>拠点一覧</h1>
 
-<table class="table table-bordered table-striped table-condensed">
-  <thead>
-    <tr>
-      <td class="col-md-4"></td>
-      <td class="col-md-2"></td>
-      <td class="col-md-2 t-middle">拠点番号</td>
-      <td class="col-md-2 t-middle">拠点名</td>
-      <td class="col-md-2 t-middle">拠点種類</td>
-    </tr>
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <table class="table table-bordered table-striped table-condensed">
+      <thead>
+        <tr>
+          <td class="col-md-4"></td>
+          <td class="col-md-2"></td>
+          <td class="col-md-2 t-middle">拠点番号</td>
+          <td class="col-md-2 t-middle">拠点名</td>
+          <td class="col-md-2 t-middle">拠点種類</td>
+        </tr>
   </thead>
 
-  <tbody>
-    <% @base.each do |base| %>
+  <% @base.each do |base| %>
+    <tbody>
       <tr>
         <td>
           <%= link_to "編集", edit_basis_path(base), remote: true, class: "btn btn-primary" %>
@@ -29,8 +31,8 @@
         <td class="t-middle"><%= base.base_name %></td>
         <td class="t-middle"><%= base.attendance_type %></td>
       </tr>
-    <% end %>
-  </tbody>
+    </tbody>
+  <% end %>
 </table>
 
 <div class="panel panel-default">

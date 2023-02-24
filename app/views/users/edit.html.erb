@@ -1,10 +1,38 @@
 <% provide(:title, "Edit") %>
-<% provide(:class_text, 'user--edit') %>
-<% provide(:button_text,'編集') %>
 <h1>アカウント情報の更新</h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= render 'form' %>
+    <%= form_with(model: @user, url: user_path(@user), local: true, method: :patch) do |f| %>
+
+      <%= f.label :"名前", class: "label-user--edit" %>
+      <%= f.text_field :name, class: "form-control" %>
+
+      <%= f.label :"メールアドレス", class: "label-user--edit" %>
+      <%= f.email_field :email, class: "form-control" %>
+
+      <%= f.label :"所属", class: "label-user--edit" %>
+      <%= f.text_field :affiliation, class: "form-control" %>
+
+      <%= f.label :"社員番号", class: "label-user--edit" %>
+      <%= f.number_field :employee_number, class: "form-control" %>
+
+      <%= f.label :"カードID", class: "label-user--edit" %>
+      <%= f.number_field :uid, class: "form-control" %>
+
+      <%= f.label :"パスワード", class: "label-user--edit" %>
+      <%= f.password_field :password, class: "form-control" %>
+
+      <%= f.label :"基本時間", class: "label-user--edit" %>
+      <%= f.time_field :basic_work_time, class: "form-control" %>
+
+      <%= f.label :"指定勤務開始時間", class: "label-user--edit" %>
+      <%= f.time_field :designated_work_start_time, class: "form-control" %>
+
+      <%= f.label :"指定勤務終了時間", class: "label-user--edit" %>
+      <%= f.time_field :designated_work_end_time, class: "form-control" %>
+
+      <%= f.submit "更新", class: "btn btn-primary btn-block btn-user--edit" %>
+    <% end %>
   </div>
 </div>
