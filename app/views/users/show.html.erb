@@ -57,6 +57,8 @@
     </div>   
   <% end %>
 </div>
+
+<!-- 申請通知 -->
 <% if current_user?(@user) || current_user.admin? %>
   <div><%= link_to "1ヶ月の勤怠編集へ", attendances_edit_one_month_user_path(@user, date: @first_day), class: "btn btn-primary" %>  
     <%= link_to "csv出力", user_path(@user, date: @first_day, format: :csv), class: "btn btn-primary" %>
@@ -104,12 +106,12 @@
             <% end %>                        
           </td>                  
           <td class="<% if day.worked_on.saturday? %>sat<% end %>
-                     <% if day.worked_on.sunday? %>sun<% end %>">
-                     <%= l(day.worked_on, format: :short) %>
+                    <% if day.worked_on.sunday? %>sun<% end %>">
+                    <%= l(day.worked_on, format: :short) %>
           </td>
           <td class="<% if day.worked_on.saturday? %>sat<% end %>
-                     <% if day.worked_on.sunday? %>sun<% end %>">
-                     <%= $days_of_the_week[day.worked_on.wday] %>
+                    <% if day.worked_on.sunday? %>sun<% end %>">
+                    <%= $days_of_the_week[day.worked_on.wday] %>
           </td>
           <td>
             <% if day.started_at.present? %>
@@ -159,17 +161,17 @@
               <%= working_overwork_times(@user.designated_work_end_time, day.overwork_end_time, day.overwork_next_day) %>                                                    
             <% end %>
           </td>
-          <td><%= day.process_content %></td>
+          <td><%= day.business_process_content %></td>
           <td colspan="2">
             <% if day.overwork_status == "申請中" %>
               <%= User.find(day.superior_confirmation).name %>へ残業申請中<br>
             <% elsif (day.overwork_status == "承認") || (day.overwork_status == "否認") %>
-            　<%= User.find(day.superior_confirmation).name %>より残業<%= day.overwork_status %><br>
+              <%= User.find(day.superior_confirmation).name %>より残業<%= day.overwork_status %><br>
             <% end %>
             <% if day.attendance_change_status == "申請中" %>
               <%= User.find(day.superior_attendance_change_confirmation).name %>へ勤怠変更申請中
             <% elsif (day.attendance_change_status == "承認") || (day.attendance_change_status == "否認") %>
-            　<%= User.find(day.superior_attendance_change_confirmation).name %>より勤怠<%= day.attendance_change_status %>
+              <%= User.find(day.superior_attendance_change_confirmation).name %>より勤怠<%= day.attendance_change_status %>
             <% end %>                     
           </td>          
         </tr>
@@ -185,12 +187,12 @@
               <%= form_with(model: @attendance, url: attendances_update_month_request_user_path(@user), local: true, method: :patch) do |f| %>
                 <%= f.hidden_field :one_month_approval_status, value: "申請中" %>
                 <%= f.hidden_field :day, value: @first_day %>                          
-                  <% if @attendance.one_month_approval_status.nil? %>                
+                  <% if @attendance.onemonth_approval_status.nil? %>                
                     所属長承認 未
-                  <% elsif @attendance.one_month_approval_status == "申請中" %>
+                  <% elsif @attendance.onemonth_approval_status == "申請中" %>
                     <%= User.find(@attendance.superior_month_notice_confirmation).name %>へ勤怠申請中
-                  <% elsif @attendance.one_month_approval_status == "承認" || @attendance.one_month_approval_status == "否認"%>
-                    <%= User.find(@attendance.superior_month_notice_confirmation).name %>より<%= @attendance.one_month_approval_status %>
+                  <% elsif @attendance.onemonth_approval_status == "承認" || @attendance.onemonth_approval_status == "否認"%>
+                    <%= User.find(@attendance.superior_month_notice_confirmation).name %>より<%= @attendance.onemonth_approval_status %>
                   <% end %>                                      
                 <br><%= f.collection_select :superior_month_notice_confirmation, @superior, :id, :name,{prompt: ""}, {class: "form-control"} %>                         
                 <%= f.submit " 申請 ", class: "btn btn-primary" %>              

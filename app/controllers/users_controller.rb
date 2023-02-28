@@ -9,7 +9,7 @@ class UsersController < ApplicationController
   # 1か月分の勤怠情報を取得
   before_action :set_one_month, only: :show
   # アクセス先のログインユーザーor上長（管理者も不可）
-  before_action :not_allow_admin_user, only: :show
+  before_action :admin_or_correct_user, only: :show
 
   def index
     @users = User.paginate(page: params[:page])
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
     if current_user.superior?      
       @overwork_sum = Attendance.includes(:user).where(superior_confirmation: current_user.id, overwork_status: "申請中").count
       @attendance_change_sum = Attendance.includes(:user).where(superior_attendance_change_confirmation: current_user.id, attendance_change_status: "申請中").count
-      @one_month_approval_sum = Attendance.includes(:user).where(superior_month_notice_confirmation: current_user.id, one_month_approval_status: "申請中").count    
+      @one_month_approval_sum = Attendance.includes(:user).where(superior_month_notice_confirmation: current_user.id, onemonth_approval_status: "申請中").count    
     end
     # csv出力
     respond_to do |format|
@@ -90,7 +90,7 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
   
-  def list_of_employees
+  def working_list
     @users = User.all.includes(:attendances)
   end
 
@@ -104,7 +104,7 @@ class UsersController < ApplicationController
     end
     
     def basic_info_params
-      params.require(:user).permit(:name, :email, :affiliation, :employoee_number, :uid, :password, :basic_work_time, :designated_work_start_time, :designated_work_end_time)
+      params.require(:user).permit(:name, :email, :affiliation, :employee_number, :uid, :password, :basic_work_time, :designated_work_start_time, :designated_work_end_time)
     end
 
     def user_params

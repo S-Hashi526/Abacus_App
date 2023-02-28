@@ -8,7 +8,12 @@ class ApplicationController < ActionController::Base
 
   # paramsハッシュからユーザーを取得します。
   def set_user
-    @user = User.find(params[:id])
+    if User.where(id: params[:id]).present?
+      @user = User.find(params[:id])
+    else
+      flash[:danger] = "ユーザーが存在しません"
+      redirect_to root_url
+    end
   end
 
   def set_user_user_id
@@ -27,16 +32,27 @@ class ApplicationController < ActionController::Base
 
   # アクセスしたユーザーが現在ログインしているユーザーか確認します。
   def correct_user
-    redirect_to(root_url) unless current_user?(@user) || current_user.admin?
+    redirect_to(root_url) unless current_user?(@user)
   end
   
   # システム管理権限所有かどうか判定。
   def admin_user
-    redirect_to root_url unless current_user.admin?
+    unless current_user.admin?
+      flash[:danger] = "権限がありません"
+      redirect_to root_url
+    end
   end
 
+  # アクセスしたユーザーが現在ログインしているユーザーまたは上長ユーザーがを確認
   def admin_or_correct_user
-    redirect_to root_url if current_user.admin?
+    if params[:id] == "1"
+      redirect_to root_url
+      return
+    end
+    unless current_user?(@user) || current_user.superior?
+      flash[:danger] = "権限がありません"
+      redirect_to root_url
+    end
   end
 
   # ページ出力前に1ヶ月分のデータの存在を確認・セット。
@@ -54,7 +70,7 @@ class ApplicationController < ActionController::Base
     unless one_month.count == @attendances.count # それぞれの件数（日数）が一致するか評価します。
       ActiveRecord::Base.transaction do # トランザクションを開始します。
         # 繰り返し処理により、1ヶ月分の勤怠データを生成します。
-        one_month.each {|day| @user.attendances.create!(worked_on: day) }
+        one_month.each { |day| @user.attendances.create!(worked_on: day) }
       end
       @attendances = @user.attendances.where(worked_on: @first_day..@last_day).order(:worked_on)
     end
