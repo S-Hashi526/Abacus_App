@@ -70,11 +70,11 @@ class AttendancesController < ApplicationController
   def update_attendance_change
     attendance_change_params.each do |id, item|
       attendance = Attendance.find(id)
-      if item[:chenge_check]
+      if item[:change_check]
         if item[:attendance_change_status]
           if attendance.begin_started.blank? && attendance.begin_finished.blank?
             attendance.begin_started = attendance.started_at
-            attendance.begin_finised = attendance.finished_at
+            attendance.begin_finished = attendance.finished_at
           end
           attendance.started_at = attendance.change_started_at
           attendance.finished_at = attendance.change_finished_at
@@ -152,15 +152,15 @@ class AttendancesController < ApplicationController
 
   # 1か月分の勤怠所属長承認
   def edit_one_month_approval
-    @month_attendances = Attendance.where(superior_month_notice_confirmation: @user.id, one_month_approval_status: "申請中").order(:user_id, :worked_on).group_by(&:user_id)
+    @month_attendances = Attendance.where(superior_month_notice_confirmation: @user.id, onemonth_approval_status: "申請中").order(:user_id, :worked_on).group_by(&:user_id)
   end
 
   def update_one_month_approval
     month_approval_params.each do |id, item|
       attendance = Attendance.find(id)
       if item[:approval_check]
-        if item[:one_month_approval_status] == "なし"
-          item[:one_month_approval_status] == nil
+        if item[:onemonth_approval_status] == "なし"
+          item[:onemonth_approval_status] == nil
           item[:approval_check] = nil
         end
         attendance.update(item)
@@ -177,7 +177,7 @@ class AttendancesController < ApplicationController
   end
 
   def log_page
-    if Attendance.where(one_month_approval_status: "承認").order(:user_id, :worked_on).group_by(&:user_id)
+    if Attendance.where(onemonth_approval_status: "承認").order(:user_id, :worked_on).group_by(&:user_id)
       if params["select_year(li)"].nil?
         @first_day = Date.current.beginning_of_month
       else
@@ -201,11 +201,11 @@ class AttendancesController < ApplicationController
   
     # 1か月分の勤怠情報を扱います。
     def attendances_params
-      params.require(:user).permit(attendances: [:started_at, 
-                                                :finished_at, 
-                                                :next_day, 
-                                                :note, 
-                                                :superior_attendance_change_confirmation, 
+      params.require(:user).permit(attendances: [:change_started_at,
+                                                :change_finished_at,
+                                                :next_day,
+                                                :note,
+                                                :superior_attendance_change_confirmation,
                                                 :attendance_change_status])[:attendances]
     end
     
@@ -222,10 +222,10 @@ class AttendancesController < ApplicationController
     end
 
     def month_request_params
-      params.require(:attendance).permit(:superior_month_notice_confirmation, :one_month_approval_status)
+      params.require(:attendance).permit(:superior_month_notice_confirmation, :onemonth_approval_status)
     end
 
     def month_approval_params
-      params.require(:user).permit(attendances: [:approval_check, :one_month_approval_status])[:attendances]
+      params.require(:user).permit(attendances: [:approval_check, :onemonth_approval_status])[:attendances]
     end
 end

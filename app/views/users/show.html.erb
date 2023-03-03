@@ -60,7 +60,7 @@
 
 <!-- 申請通知 -->
 <% if current_user?(@user) || current_user.admin? %>
-  <div><%= link_to "1ヶ月の勤怠編集へ", attendances_edit_one_month_user_path(@user, date: @first_day), class: "btn btn-primary" %>  
+  <div><%= link_to "勤怠を編集", attendances_edit_one_month_user_path(@user, date: @first_day), class: "btn btn-primary" %>  
     <%= link_to "csv出力", user_path(@user, date: @first_day, format: :csv), class: "btn btn-primary" %>
     <br><%= link_to "勤怠修正ログ（承認済）", log_page_user_attendance_path(@user), remote: true, class: "btn btn-primary"%>
   </div>
@@ -185,7 +185,7 @@
           <% if current_user?(@user) %>
             <td colspan="2">
               <%= form_with(model: @attendance, url: attendances_update_month_request_user_path(@user), local: true, method: :patch) do |f| %>
-                <%= f.hidden_field :one_month_approval_status, value: "申請中" %>
+                <%= f.hidden_field :onemonth_approval_status, value: "申請中" %>
                 <%= f.hidden_field :day, value: @first_day %>                          
                   <% if @attendance.onemonth_approval_status.nil? %>                
                     所属長承認 未

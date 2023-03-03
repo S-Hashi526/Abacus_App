@@ -28,7 +28,7 @@
               <td><%= $days_of_the_week[@attendance.worked_on.wday] %></td>
               <td><%= f.time_field :overwork_end_time, class: "form-control" %></td>
               <td><%= f.check_box :overwork_next_day, id: "overwork_next_day" %></td>
-              <td><%= f.text_field :process_content, class: "form-control" %></td>            
+              <td><%= f.text_field :business_process_content, class: "form-control" %></td>            
               <td>
                 <%= f.collection_select :superior_confirmation, @superior, :id, :name,{prompt: ""}, {class: "form-control"} %>                                
               </td>

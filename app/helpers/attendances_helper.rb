@@ -56,7 +56,7 @@ module AttendancesHelper
   end
 
   #1ヶ月分の申請のステータス
-  def one_month_approval_status_text(status)
+  def onemonth_approval_status_text(status)
     case status
     when "申請中"
       "1ヶ月の勤怠申請中"
