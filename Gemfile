@@ -37,4 +37,4 @@ end
 
 # Windows環境のため実装
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-gem 'wdm', '>= 0.1.0'
+gem "dockerfile-rails", ">= 1.2", :group => :development
