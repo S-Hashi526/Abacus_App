@@ -1,4 +1,4 @@
-# fly.toml file generated for s-hashi-attendancesystem-a on 2023-03-12T22:41:54+09:00
+# fly.toml file generated for s-hashi-attendancesystem-a on 2023-03-23T22:58:11+09:00
 
 app = "s-hashi-attendancesystem-a"
 kill_signal = "SIGINT"
@@ -7,8 +7,6 @@ primary_region = "nrt"
 processes = []
 
 [env]
-  MAX_PLAYER_COUNT = "15"
-  MY_SPECIAL_ENV = "some_value"
 
 [experimental]
   auto_rollback = true
