@@ -3,13 +3,15 @@ class UsersController < ApplicationController
   # ログイン中のユーザーか
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   # アクセス先のログインユーザー
-  before_action :correct_user, only: [:edit, :update, :edit_basic_info, :update_basic_info, :edit_basic_info, :update_basic_info]
+  before_action :correct_user, only: [:edit, :update]
   # 管理者ユーザー
-  before_action :admin_user, only: [:destroy, :index, :list_of_employees, :edit_basic_info, :update_basic_info]
+  before_action :admin_user, only: [:destroy, :index, :list_of_employees]
   # 1か月分の勤怠情報を取得
   before_action :set_one_month, only: :show
   # アクセス先のログインユーザーor上長（管理者も不可）
   before_action :admin_or_correct_user, only: :show
+
+  skip_before_action :correct_user, only: [:edit_basic_info, :update_basic_info]
 
   def index
     @users = User.paginate(page: params[:page])
@@ -66,10 +68,11 @@ class UsersController < ApplicationController
   def update
     if @user.update(user_params)
       flash[:success] = "アカウント情報を更新しました。"
+      redirect_to user_path(@user)
     else
       flash[:danger] = "アカウント情報を更新できません。"
+      render :edit
     end
-    redirect_to edit_user_url
   end
 
   def edit_basic_info
@@ -77,11 +80,12 @@ class UsersController < ApplicationController
 
   def update_basic_info
     if @user.update_attributes(basic_info_params)
-      flash[:success] = "社員情報を更新しました。"
+      flash[:success] = "#{@user.name}の社員情報を更新しました。"
+      redirect_to users_url
     else
-      flash[:danger] = "社員情報を更新できません。"     
+      flash[:danger] = "#{@user.name}の社員情報を更新できません。"
+      redirect_to users_url
     end
-    redirect_to users_url
   end
 
   def destroy
@@ -104,13 +108,23 @@ class UsersController < ApplicationController
     end
     
     def basic_info_params
-      params.require(:user).permit(:name, :email, :affiliation, :employee_number, :uid, :password, :basic_work_time, :designated_work_start_time, :designated_work_end_time)
+      params.require(:user).permit(:name, :email, :affiliation, :employee_number, 
+                                  :uid, :password, :basic_work_time, :designated_work_start_time, :designated_work_end_time)
     end
 
     def user_params
       params.require(:user).permit(:name, :email, :affiliation, :employee_number, :uid, :password, :basic_work_time, :designated_work_start_time, :designated_work_end_time)
     end
     
+    def admin_user
+      redirect_to(root_url) unless current_user.admin?
+    end
+
+    def admin_or_correct_user
+      unless current_user.admin? || current_user?(@user)
+        redirect_to(root_url)
+      end
+    end
 
     def send_attendances_csv(attendances)
       # 文字化け防止

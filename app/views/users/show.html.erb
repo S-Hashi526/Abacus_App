@@ -119,13 +119,13 @@
           <!-- 出勤：時 -->
           <td>
             <% if day.started_at.present? %>
-              <%= l(day.started_at.ceil_to(15.minutes), format: :hour) %>
+              <%= l(day.started_at, format: :hour) %>
             <% end %>
           </td>
           <!-- 出勤：分 -->
           <td>
             <% if day.started_at.present? %>
-              <%= l(day.started_at.ceil_to(15.minutes), format: :minutes) %>
+              <%= l(day.started_at, format: :minutes) %>
             <% end %>
           </td>
           <!-- 出勤ボタン -->
@@ -139,13 +139,13 @@
           <!-- 退勤：時 -->
           <td>
             <% if day.finished_at.present? %>
-              <%= l(day.finished_at.floor_to(15.minutes), format: :hour) %>
+              <%= l(day.finished_at, format: :hour) %>
             <% end %>
           </td>
           <!-- 退勤：分 -->
           <td>
             <% if day.finished_at.present? %>
-              <%= l(day.finished_at.floor_to(15.minutes), format: :minutes) %>
+              <%= l(day.finished_at, format: :minutes) %>
             <% end %>
           </td>
           <!-- 退勤ボタン -->
@@ -163,6 +163,7 @@
               <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
             <% end %>
           </td>
+
           <!-- 備考 -->
           <td><%= day.note %></td>
           <!-- 終了予定時間：時 -->
