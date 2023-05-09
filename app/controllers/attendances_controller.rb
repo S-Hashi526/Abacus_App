@@ -71,7 +71,7 @@ class AttendancesController < ApplicationController
     attendance_change_params.each do |id, item|
       attendance = Attendance.find(id)
       if item[:change_check]
-        if item[:attendance_change_status]
+        if item[:attendance_change_status] == "承認"
           if attendance.begin_started.blank? && attendance.begin_finished.blank?
             attendance.begin_started = attendance.started_at
             attendance.begin_finished = attendance.finished_at
@@ -90,7 +90,6 @@ class AttendancesController < ApplicationController
         item[:change_check] = nil
         attendance.update(item)
         flash[:success] = "勤怠変更申請の承認結果を送信しました。"
-
       end
     end
     redirect_to user_url(@user)
@@ -178,7 +177,7 @@ class AttendancesController < ApplicationController
 
   def log_page
     if Attendance.where(onemonth_approval_status: "承認").order(:user_id, :worked_on).group_by(&:user_id)
-      if params["select_year(li)"].nil?
+      if params["select_year(1i)"].nil?
         @first_day = Date.current.beginning_of_month
       else
         @first_day = Date.parse("#{params["select_year(1i)"]}/#{params["select_month(2i)"]}/1")

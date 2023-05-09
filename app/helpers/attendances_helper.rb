@@ -18,7 +18,7 @@ module AttendancesHelper
     end
   end
   
-  def working_overwork_times(designated_work_end_time, overwork_end_time, overwork_next_day)            
+  def working_overwork_times(designated_work_end_time, overwork_end_time, overwork_next_day)
     if overwork_next_day
       format("%.2f", (overwork_end_time.hour - designated_work_end_time.hour) + ((overwork_end_time.min - designated_work_end_time.min) / 60.0) + 24)
     else

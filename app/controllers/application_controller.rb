@@ -49,7 +49,7 @@ class ApplicationController < ActionController::Base
       redirect_to root_url
       return
     end
-    unless current_user?(@user) || current_user.superior?
+    unless current_user && (current_user?(@user) || current_user.superior?)
       flash[:danger] = "権限がありません"
       redirect_to root_url
     end
