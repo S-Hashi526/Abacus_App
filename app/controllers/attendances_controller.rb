@@ -63,6 +63,7 @@ class AttendancesController < ApplicationController
     redirect_to attendances_edit_one_month_user_url(date: params[:date]) and return       
   end
 
+  # 勤怠変更申請の承認
   def edit_attendance_change
     @change_attendances = Attendance.where(superior_attendance_change_confirmation: @user.id, attendance_change_status: "申請中").order(:user_id, :worked_on).group_by { |attendance| attendance.user_id }
   end

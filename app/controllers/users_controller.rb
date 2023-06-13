@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # アクセス先のログインユーザー
   before_action :correct_user, only: [:edit, :update]
   # 管理者ユーザー
-  before_action :admin_user, only: [:destroy, :index, :list_of_employees]
+  before_action :admin_user, only: [:destroy, :index, :list_of_employees, :working_list]
   # 1か月分の勤怠情報を取得
   before_action :set_one_month, only: :show
   # アクセス先のログインユーザーor上長（管理者も不可）

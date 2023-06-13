@@ -60,10 +60,14 @@
                     <!--変更後・退勤-->
                     <td><%= day.change_finished_at&.strftime("%H") if day.change_finished_at&.present? %></td>
                     <td><%= day.change_finished_at&.strftime("%M") if day.change_finished_at&.present? %></td>
+                    <!--備考-->
                     <td><%= day.note %></td>
+                    <!--指示者確認㊞-->
                     <td><%= attendance.select :attendance_change_status, [["",""], ["なし","なし"], ["申請中","申請中"], ["承認","承認"], ["否認","否認"]], class: "form-control" %></td>
+                    <!--変更-->
                     <td><%= attendance.check_box :change_check, {}, true, false %></td>
-                    <td><%= link_to "確認", user_path(id, date: day.worked_on.beginning_of_month), target: :_blank, rel: "noopener noreferrer", class: "btn btn-primary", readonly: :true %></td>
+                    <!--勤怠の確認-->
+                    <td><%= link_to "確認", user_path(id: id, date: day.worked_on.beginning_of_month), target: "_blank", rel: "noopener noreferrer", class: "btn btn-primary", readonly: true %></td>
                   </tr>
                 <% end %>
               <% end %>
