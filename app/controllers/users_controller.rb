@@ -116,15 +116,15 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :affiliation, :employee_number, :uid, :password, :basic_work_time, :designated_work_start_time, :designated_work_end_time)
     end
     
-    def admin_user
-      redirect_to(root_url) unless current_user.admin?
-    end
+    # def admin_user
+    #   redirect_to(root_url) unless current_user.admin?
+    # end
 
-    def admin_or_correct_user
-      unless current_user.admin? || current_user?(@user)
-        redirect_to(root_url)
-      end
-    end
+    # def admin_or_correct_user
+    #   unless current_user.admin? || current_user?(@user)
+    #     redirect_to(root_url)
+    #   end
+    # end
 
     def send_attendances_csv(attendances)
       # 文字化け防止

@@ -65,7 +65,18 @@ class AttendancesController < ApplicationController
 
   # 勤怠変更申請の承認
   def edit_attendance_change
-    @change_attendances = Attendance.where(superior_attendance_change_confirmation: @user.id, attendance_change_status: "申請中").order(:user_id, :worked_on).group_by { |attendance| attendance.user_id }
+    @change_attendances = Attendance.where(superior_attendance_change_confirmation: @user.id, attendance_change_status: "申請中").order(:user_id, :worked_on).group_by(&:user_id)
+    
+    # データベースに条件に一致するレコードが存在するかを確認
+    change_attendances = Attendance.where(superior_attendance_change_confirmation: @user.id, attendance_change_status: "申請中")
+
+    if change_attendances.exists?
+      # レコードが村債する場合の処理
+      puts "条件に一致するレコードが存在します。"
+    else
+      # レコードが存在しない場合の処理
+      puts "条件に一致するレコードは存在しません。"
+    end
   end
 
   def update_attendance_change

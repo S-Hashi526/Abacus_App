@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # アクセスしたユーザーが現在ログインしているユーザーまたは上長ユーザーがを確認
+  # アクセスしたユーザーが現在ログインしているユーザーまたは上長ユーザーかを確認
   def admin_or_correct_user
     if params[:id] == "1"
       redirect_to root_url

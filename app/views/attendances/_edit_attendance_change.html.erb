@@ -8,7 +8,7 @@
       </button>      
     </div>    
     <div class="modal-body">
-      <%= form_with(model: @user, url: update_attendance_change_user_attendance_path(@user), local: true, method: :patch) do |f| %>
+      <%= form_with(model: @user, url: update_attendance_change_user_attendance_path(@user.id), local: true, method: :patch) do |f| %>
         <% @change_attendances.each do |id, attendances| %>
           <h1 class="modal-title">【<%= User.find(id).name %>からの勤怠変更申請】</h1>
           <table class="table table-bordered table-condensed table-hover" id="table-attendances">
@@ -67,7 +67,7 @@
                     <!--変更-->
                     <td><%= attendance.check_box :change_check, {}, true, false %></td>
                     <!--勤怠の確認-->
-                    <td><%= link_to "確認", user_path(id: id, date: day.worked_on.beginning_of_month), target: "_blank", rel: "noopener noreferrer", class: "btn btn-primary", readonly: true %></td>
+                    <td><%= link_to "確認", user_path(id: id, date: day.worked_on.beginning_of_month), target: "_blank", rel: "noopener noreferrer", class: "btn btn-primary" %></td>
                   </tr>
                 <% end %>
               <% end %>
