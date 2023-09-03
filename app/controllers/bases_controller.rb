@@ -2,7 +2,7 @@ class BasesController < ApplicationController
   before_action :set_base, only: [:show, :edit, :update, :destroy]
 
   # 管理者かどうか
-  before_action :admin_user, only: [:index, :show, :new, :edit, :update]
+  before_action :admin_user, only: [:show, :new, :edit, :update]
   
   def index
     @bases = Base.all

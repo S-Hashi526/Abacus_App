@@ -1,3 +1,88 @@
 // Place all the styles related to the StaticPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.top-button-001 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  margin:0 auto;
+  padding: 1em 2em;
+  border: none;
+  border-radius: 50px;
+  background-color: #eb6100;
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 1.2em;
+  /* ホバー時のボタンのスタイルを指定 */
+  &:hover {
+    background-color: #f56500;
+  }
+}
+
+/* ボタンを中央揃えにする */
+.top-button-002 {
+  text-align: center;
+}
+
+/* ボタンのスタイルを指定 */
+.top-button-002 div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transform: translateY(7px);
+  width: 220px;
+  margin: 0 auto;
+  padding: .2em 0;
+  border: 2px solid #eb6100;
+  border-radius: 10px;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .2));
+  background-color: #fff;
+  color: #eb6100;
+  font-size: 1.2em;
+}
+
+/* ボタンの上部の三角形を作成 */
+.top-button-002 div::before,
+.top-button-002 div::after {
+  position: absolute;
+  top: 100%;
+  content: '';
+  clip-path: polygon(0 0, 100% 0%, 50% 100%);
+}
+
+/* 上部の三角形のスタイルを指定 */
+.top-button-002 div::before {
+  width: 16px;
+  height: 8px;
+  background-color: #eb6100;
+}
+
+/* 下部の三角形のスタイルを指定 */
+.top-button-002 div::after {
+  width: 12px;
+  height: 6px;
+  background-color: #fff;
+}
+
+/* ボタン内のテキストスタイルを指定 */
+.top-button-002 button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  margin: 0 auto;
+  padding: 1em 2em;
+  border: none;
+  border-radius: 50px;
+  background-color: #eb6100;
+  color: #fff;
+  font-weight: 600;
+  font-size: 2em;
+  /* ホバー時のボタンのスタイルを指定 */
+  &:hover {
+    background-color: #f56500;
+  }
+}

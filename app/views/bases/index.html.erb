@@ -1,7 +1,7 @@
 <% provide(:title, 'Base list') %>
 <% provide(:button_text, '新規作成') %>
 
-<h1>拠点一覧</h1>
+<h1>教室一覧</h1>
 
 <div class="row">
   <div class="col-md-10 col-md-offset-1">
@@ -27,6 +27,8 @@
           data: { confirm: "削除してよろしいですか?" },
           class: "btn btn-danger" %>
         </td>
+        <td class="t-middle"><%= base.base_number %></td>
+        <td class="t-middle"><%= base.base_number %></td>
         <td class="t-middle"><%= base.base_number %></td>
         <td class="t-middle"><%= base.base_name %></td>
         <td class="t-middle"><%= base.attendance_type %></td>

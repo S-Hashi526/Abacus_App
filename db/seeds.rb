@@ -13,7 +13,7 @@ User.create!(
       superior: false
     },
     {
-      name: "上長A",
+      name: "塾長",
       email: "superior-a@email.com",
       employee_number: "1001",
       uid: "1001",
@@ -31,6 +31,16 @@ User.create!(
       password_confirmation: "password",
       admin: false,
       superior: true
+    },
+    {
+      name: "生徒A",
+      email: "sample-1@email.com",
+      employee_number: "1101",
+      uid: "1101",
+      password: "password",
+      password_confirmation: "password",
+      admin: false,
+      superior: false
     }
   ]
 )  

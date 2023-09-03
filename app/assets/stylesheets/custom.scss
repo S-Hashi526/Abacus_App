@@ -42,7 +42,7 @@ h2 {
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
-  color: #777;
+  // color: #777;
 }
 
 p {
@@ -52,20 +52,61 @@ p {
 
 /* header */
 
+#header {
+  background-color: aquamarine;
+}
+
 #logo {
   float: left;
-  margin-right: 10px;
-  font-size: 1.7em;
-  color: #fff;
-  text-transform: uppercase;
+  margin-top: 10px;
+  font-size: 2em;
+  color: forestgreen; 
+  text-transform: none;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
+  font-style: italic;
+  &:hover {
+    color: cadetblue;
+    text-decoration: none;
+    background-color: transparent;
+  }
 }
 
-#logo:hover {
-  color: #fff;
-  text-decoration: none;
+
+li .header-list {
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: forestgreen !important;
+  text-transform: none;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  &:hover {
+    color: cadetblue !important;
+    text-decoration: none;
+    background-color: transparent;
+  }
+}
+
+#dropdown-title {
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: forestgreen !important;
+  text-transform: none;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  &:hover {
+    color: cadetblue !important;
+    text-decoration: none;
+    background-color: transparent;
+  }
+}
+
+li .dropdown-header {
+  background-color: rgba(200, 200, 200, 0.5);
+  font-weight: bold;
 }
 
 /* debug */

@@ -1,20 +1,20 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
+<header class="navbar navbar-fixed-top navbar-inverse" id="header">
   <div class="container">
-    <%= link_to "勤怠システム", root_path, id: "logo" %>
+    <a href="<%= root_path %>" id="logo"><i class="fa-solid fa-seedling"></i> AbucusUp</a>
     <nav>
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to "トップへ", root_path %></li>
+        <li><a href="<%= root_path %>" class="header-list"><i class="fa-solid fa-house"></i>　トップへ</a></li>
         <% if logged_in? %>
-          <% if current_user.admin? %>          
-            <li><%= link_to "ユーザー一覧", users_path %></li>         
-            <li><%= link_to "出勤社員一覧", working_list_user_path(current_user) %></li>
-            <li><%= link_to "拠点情報の修正", bases_path %></li>
-            <li><%= link_to "基本情報の修正", edit_user_path(current_user) %></li>
+          <% if current_user.admin? %>
+            <li><%= link_to "ユーザー一覧", users_path, class: "header-list"  %></li>
+            <li><%= link_to "出勤社員一覧", working_list_user_path(current_user), class: "header-list"  %></li>
+            <li><%= link_to "教室情報の修正", bases_path, class: "header-list"  %></li>
+            <li><%= link_to "基本情報の修正", edit_user_path(current_user), class: "header-list"  %></li>
           <% end%>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <a><%= link_to "#", class: "dropdown-toggle", "data-toggle" => "dropdown", id: "dropdown-title" do %>
               アカウント <b class="caret"></b>
-            </a>
+              <% end %>
             <ul class="dropdown-menu">
               <% unless current_user.admin? %>
                 <li><%= link_to "勤怠", current_user %></li>
@@ -24,10 +24,10 @@
               <li>
                 <%= link_to "ログアウト", logout_path, method: :delete %>
               </li>
-            </ul>              
+            </ul>
           </li>
         <% else %>
-          <li><%= link_to "ログイン", login_path %></li>
+          <li><a href="<%= login_path %>" class="header-list"><i class="fa-solid fa-right-to-bracket"></i>　ログイン</a></li>
         <% end %>
       </ul>
     </nav>

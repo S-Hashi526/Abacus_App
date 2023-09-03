@@ -18,6 +18,7 @@ gem 'sass-rails', '~> 5.0'          # SCSS(Syntactically Awesome StyleSheet：�
 gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
 gem 'will_paginate'                 # ページネーション
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
