@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20230302143041) do
+ActiveRecord::Schema.define(version: 20230903130931) do
 
   create_table "attendances", force: :cascade do |t|
     t.date "worked_on"
@@ -54,6 +54,14 @@ ActiveRecord::Schema.define(version: 20230302143041) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "grades", force: :cascade do |t|
+    t.integer "score"
+    t.string "subject"
+    t.date "date"
+    t.integer "student_id"
+    t.index ["student_id"], name: "index_grades_on_student_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -71,6 +79,8 @@ ActiveRecord::Schema.define(version: 20230302143041) do
     t.boolean "superior", default: false
     t.datetime "basic_time", default: "2023-08-26 23:00:00"
     t.datetime "work_time", default: "2023-08-26 22:30:00"
+    t.integer "student_number"
+    t.boolean "student", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
