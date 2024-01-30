@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20230903130931) do
+ActiveRecord::Schema.define(version: 20230902135921) do
 
   create_table "attendances", force: :cascade do |t|
     t.date "worked_on"
@@ -58,8 +58,6 @@ ActiveRecord::Schema.define(version: 20230903130931) do
     t.integer "score"
     t.string "subject"
     t.date "date"
-    t.integer "student_id"
-    t.index ["student_id"], name: "index_grades_on_student_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -71,16 +69,14 @@ ActiveRecord::Schema.define(version: 20230903130931) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "affiliation"
-    t.datetime "basic_work_time", default: "2023-08-26 22:30:00"
-    t.datetime "designated_work_start_time", default: "2023-08-27 00:00:00"
-    t.datetime "designated_work_end_time", default: "2023-08-27 08:30:00"
+    t.datetime "basic_work_time", default: "2024-01-30 22:30:00"
+    t.datetime "designated_work_start_time", default: "2024-01-31 00:00:00"
+    t.datetime "designated_work_end_time", default: "2024-01-31 08:30:00"
     t.integer "employee_number"
     t.integer "uid"
     t.boolean "superior", default: false
-    t.datetime "basic_time", default: "2023-08-26 23:00:00"
-    t.datetime "work_time", default: "2023-08-26 22:30:00"
-    t.integer "student_number"
-    t.boolean "student", default: false
+    t.datetime "basic_time", default: "2024-01-30 23:00:00"
+    t.datetime "work_time", default: "2024-01-30 22:30:00"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
