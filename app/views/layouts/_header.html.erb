@@ -8,9 +8,16 @@
           <% if current_user.admin? %>
             <li><%= link_to "ユーザー一覧", users_path, class: "header-list"  %></li>
             <li><%= link_to "出勤社員一覧", working_list_user_path(current_user), class: "header-list"  %></li>
+            <li><%= link_to "在室生徒一覧", "#", class: "header-list"  %></li>
             <li><%= link_to "教室情報の修正", bases_path, class: "header-list"  %></li>
             <li><%= link_to "基本情報の修正", edit_user_path(current_user), class: "header-list"  %></li>
-          <% end%>
+            <% elsif current_user.principal? %>
+              <li><%= link_to "在室生徒一覧", working_list_user_path(current_user), class: "header-list"  %></li>
+              <li><%= link_to "教室情報の修正", bases_path, class: "header-list"  %></li>
+              <li><%= link_to "基本情報の修正", edit_user_path(current_user), class: "header-list"  %></li>
+            <% elsif current_user.instructor? %>
+              <li><%= link_to "在室生徒一覧", working_list_user_path(current_user), class: "header-list"  %></li>
+          <% end %>
           <li class="dropdown">
             <a><%= link_to "#", class: "dropdown-toggle", "data-toggle" => "dropdown", id: "dropdown-title" do %>
               アカウント <b class="caret"></b>
